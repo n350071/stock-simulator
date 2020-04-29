@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Open:</strong>
+  <%= @ticker_week_history.open %>
+</p>
+
+<p>
+  <strong>High:</strong>
+  <%= @ticker_week_history.high %>
+</p>
+
+<p>
+  <strong>Low:</strong>
+  <%= @ticker_week_history.low %>
+</p>
+
+<p>
+  <strong>Close:</strong>
+  <%= @ticker_week_history.close %>
+</p>
+
+<p>
+  <strong>Volue:</strong>
+  <%= @ticker_week_history.volue %>
+</p>
+
+<p>
+  <strong>Week at:</strong>
+  <%= @ticker_week_history.week_at %>
+</p>
+
+<%= link_to 'Edit', edit_ticker_week_history_path(@ticker_week_history) %> |
+<%= link_to 'Back', ticker_week_histories_path %>

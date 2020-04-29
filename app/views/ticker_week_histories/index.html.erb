@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ticker Week Histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volue</th>
+      <th>Week at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ticker_week_histories.each do |ticker_week_history| %>
+      <tr>
+        <td><%= ticker_week_history.open %></td>
+        <td><%= ticker_week_history.high %></td>
+        <td><%= ticker_week_history.low %></td>
+        <td><%= ticker_week_history.close %></td>
+        <td><%= ticker_week_history.volue %></td>
+        <td><%= ticker_week_history.week_at %></td>
+        <td><%= link_to 'Show', ticker_week_history %></td>
+        <td><%= link_to 'Edit', edit_ticker_week_history_path(ticker_week_history) %></td>
+        <td><%= link_to 'Destroy', ticker_week_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ticker Week History', new_ticker_week_history_path %>

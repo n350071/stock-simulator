@@ -1,0 +1,42 @@
+<%= form_with(model: ticker, local: true) do |form| %>
+  <% if ticker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ticker.errors.count, "error") %> prohibited this ticker from being saved:</h2>
+
+      <ul>
+        <% ticker.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :symbol %>
+    <%= form.text_field :symbol %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time_span %>
+    <%= form.text_field :time_span %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_reflashed_at %>
+    <%= form.datetime_select :last_reflashed_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time_zone %>
+    <%= form.text_field :time_zone %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ticker.name %>
+</p>
+
+<p>
+  <strong>Symbol:</strong>
+  <%= @ticker.symbol %>
+</p>
+
+<p>
+  <strong>Time span:</strong>
+  <%= @ticker.time_span %>
+</p>
+
+<p>
+  <strong>Last reflashed at:</strong>
+  <%= @ticker.last_reflashed_at %>
+</p>
+
+<p>
+  <strong>Time zone:</strong>
+  <%= @ticker.time_zone %>
+</p>
+
+<%= link_to 'Edit', edit_ticker_path(@ticker) %> |
+<%= link_to 'Back', tickers_path %>
