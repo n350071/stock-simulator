@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_032810) do
+ActiveRecord::Schema.define(version: 2020_04_29_044016) do
 
   create_table "ticker_week_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "ticker_id"
@@ -33,6 +33,12 @@ ActiveRecord::Schema.define(version: 2020_04_29_032810) do
     t.string "time_zone"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name_ja"
+    t.string "market"
+    t.integer "field33"
+    t.integer "field17"
+    t.integer "scale"
+    t.boolean "on_alph"
   end
 
 end

@@ -1,15 +1,17 @@
 namespace :ticker do
   desc 'ticker情報'
 
-  task get_symbols: :environment do
-    TickerGetSymbolService.call
+  # bin/rails ticker:import_tickers
+  task import_tickers: :environment do
+    Tickers::ImportTickersService.run
   end
 
-  task get_weekly_history: :environment do
-    TickerGetWeeklyHistory.call
-  end
+  # task get_weekly_history: :environment do
+  #   TickerGetWeeklyHistory.run
+  # end
 
 end
+
 #
 # {
 #   "Meta Data": {
