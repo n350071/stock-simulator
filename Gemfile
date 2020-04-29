@@ -54,6 +54,8 @@ group :development do
   # 手動実行: bundle exec annotate --models
   gem 'annotate'
 
+  gem 'solargraph'
+
 end
 
 group :test do
