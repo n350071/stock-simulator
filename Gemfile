@@ -29,17 +29,31 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # 環境のバナー
+  gem 'rack-dev-mark'
+
+  # debug
+  gem 'pry-rails' # binding.pry
+  gem 'pry-byebug'
+  gem 'awesome_print' # pretty prints Ruby objects in full color exposing: use ".pryrc"
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+
+  # 開発速度を早める（ファイルを前もって読み込む）
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Generate spring files => bundle exec spring binstub --all
+  # Additional commands => https://github.com/rails/spring#additional-commands
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # 自動実行設定: rails g annotate:install => lib/tasks/auto_annotate_models.rake
+  # 手動実行: bundle exec annotate --models
+  gem 'annotate'
+
 end
 
 group :test do
