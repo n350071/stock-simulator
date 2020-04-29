@@ -17,19 +17,29 @@
 /storage/*
 !/storage/.keep
 
-/public/assets
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# OSX system file
+.DS_Store
+
+# docker database
+/src
+
+/public/assets
 /public/packs
 /public/packs-test
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
--e 
 
-# OSX system file
-.DS_Store
+rspec.xml
+/coverage/*
+
+# gems
+vendor/
+
+.env
