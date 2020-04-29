@@ -19,4 +19,21 @@
 #
 class Ticker < ApplicationRecord
   has_many :ticker_week_histories
+
+  validates :symbol, uniqueness: true
+
+  def symbol_with_region(region = 'TOK')
+    "#{symbol}.#{region}"
+  end
+
+  module CSV
+    class << self
+      def symbol() 'コード' end
+      def name_ja() '銘柄名' end
+      def market() '市場・商品区分' end
+      def field33() '33業種コード' end
+      def field17() '17業種コード' end
+      def scale() '規模コード' end
+    end
+  end
 end
