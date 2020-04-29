@@ -1,4 +1,4 @@
-FROM ruby:2.7.1
+FROM ruby:2.6.3
 
 # railsコンソール中で日本語入力するための設定
 ENV LANG C.UTF-8
