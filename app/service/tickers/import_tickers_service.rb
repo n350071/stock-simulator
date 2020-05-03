@@ -21,12 +21,12 @@ class Tickers::ImportTickersService
       next if Ticker.find_by(symbol: row[Ticker::CSV.symbol])
 
       ticker = Ticker.create(
-        symbol: row[Ticker::CSV.symbol],
-        name_ja: row[Ticker::CSV.name_ja],
-        market: row[Ticker::CSV.market],
-        field33: row[Ticker::CSV.field33],
-        field17: row[Ticker::CSV.field17],
-        scale: row[Ticker::CSV.scale],
+        symbol: row[Ticker::CSV::SYMBOL],
+        name_ja: row[Ticker::CSV::NAME_JA],
+        market: row[Ticker::CSV::MARKET],
+        field33: row[Ticker::CSV::FIELD33],
+        field17: row[Ticker::CSV::FIELD17],
+        scale: row[Ticker::CSV::SCALE],
       )
       puts "#{ticker.name_ja}: #{ticker.symbol}" if ticker.persisted?
     end

@@ -10,19 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_044016) do
+ActiveRecord::Schema.define(version: 2020_04_30_133142) do
 
   create_table "ticker_week_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "ticker_id"
+    t.bigint "week_id"
     t.integer "open"
     t.integer "high"
     t.integer "low"
     t.integer "close"
-    t.integer "volue"
-    t.date "week_at"
+    t.integer "volume"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ticker_id"], name: "index_ticker_week_histories_on_ticker_id"
+    t.index ["week_id"], name: "index_ticker_week_histories_on_week_id"
   end
 
   create_table "tickers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -39,6 +40,12 @@ ActiveRecord::Schema.define(version: 2020_04_29_044016) do
     t.integer "field17"
     t.integer "scale"
     t.boolean "on_alph"
+  end
+
+  create_table "weeks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "week_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

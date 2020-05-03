@@ -6,13 +6,14 @@ namespace :ticker do
     Tickers::ImportTickersService.run
   end
 
-  # task get_weekly_history: :environment do
-  #   TickerGetWeeklyHistory.run
-  # end
+  # bin/rails ticker:import_weekly_history
+  task import_weekly_history: :environment do
+    Tickers::ImportWeeklyHistoryService.run
+  end
 
 end
 
-#
+# https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=8508.TOK&apikey=T0WZY9EXEE0YAZT1
 # {
 #   "Meta Data": {
 #       "1. Information": "Weekly Prices (open, high, low, close) and Volumes",
@@ -41,6 +42,6 @@ end
 #           "3. low": "1683.0000",
 #           "4. close": "1752.0000",
 #           "5. volume": "7254000"
-#       },
-#       "2020-04-10": {
-#           "1. open": "1430.0000",
+#       }
+#   }
+# }

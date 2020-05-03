@@ -26,14 +26,35 @@ class Ticker < ApplicationRecord
     "#{symbol}.#{region}"
   end
 
+  # ["ETF・ETN", "JASDAQ(グロース・内国株）", "JASDAQ(スタンダード・内国株）", "JASDAQ(スタンダード・外国株）", "PRO Market", "REIT・ベンチャーファンド・カントリーファンド・インフラファンド", "マザーズ（内国株）", "マザーズ（外国株）", "出資証券", "市場第一部（内国株）", "市場第一部（外国株）", "市場第二部（内国株）", "市場第二部（外国株）"]
+
   module CSV
-    class << self
-      def symbol() 'コード' end
-      def name_ja() '銘柄名' end
-      def market() '市場・商品区分' end
-      def field33() '33業種コード' end
-      def field17() '17業種コード' end
-      def scale() '規模コード' end
+    SYMBOL = 'コード'
+    NAME_JA = '銘柄名'
+    MARKET = '市場・商品区分'
+    FIELD33 = '33業種コード'
+    FIELD17 ='17業種コード'
+    SCALE = '規模コード'
+  end
+
+  module ALPHA
+    META_DATA = 'Meta Data'
+    WEEKLY_TIME_SERIES = 'Weekly Time Series'
+
+    module META
+      INFO = '1. Information'
+      SYMBOL = '2. Symbol'
+      REFRESHED = '3. Last Refreshed'
+      TIME_ZONE = '4. Time Zone'
+    end
+
+    module WEEKLY
+      OPEN = "1. open"
+      HIGH = "2. high"
+      LOW = "3. low"
+      CLOSE = "4. close"
+      VOLUME = "5. volume"
     end
   end
+
 end
