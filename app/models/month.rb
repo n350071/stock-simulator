@@ -1,19 +1,16 @@
 # == Schema Information
 #
-# Table name: weeks
+# Table name: months
 #
 #  id         :bigint           not null, primary key
-#  week_at    :date
+#  month_at   :date
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Week < ApplicationRecord
-  has_many :ticker_week_histories
-
-  validates :week_at, uniqueness: true
+class Month < ApplicationRecord
+  has_many :tfstocks, class_name: 'Months::TfStock'
 
   def at_to_s
-    week_at.to_s
+    month_at.to_s
   end
-
 end

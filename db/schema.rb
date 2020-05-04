@@ -10,42 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_133142) do
+ActiveRecord::Schema.define(version: 2020_05_04_124612) do
 
-  create_table "ticker_week_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "months", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "month_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "months_tf_stocks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "ticker_id"
-    t.bigint "week_id"
+    t.bigint "month_id"
     t.integer "open"
     t.integer "high"
     t.integer "low"
     t.integer "close"
-    t.integer "volume"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["ticker_id"], name: "index_ticker_week_histories_on_ticker_id"
-    t.index ["week_id"], name: "index_ticker_week_histories_on_week_id"
+    t.bigint "volume"
+    t.index ["month_id"], name: "index_months_tf_stocks_on_month_id"
+    t.index ["ticker_id"], name: "index_months_tf_stocks_on_ticker_id"
   end
 
   create_table "tickers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "symbol"
-    t.string "time_span"
-    t.datetime "last_reflashed_at"
-    t.string "time_zone"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "name_ja"
-    t.string "market"
+    t.integer "market"
     t.integer "field33"
     t.integer "field17"
     t.integer "scale"
-    t.boolean "on_alph"
-  end
-
-  create_table "weeks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.date "week_at"
+    t.datetime "reflashed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_tickers_on_deleted_at"
   end
 
 end

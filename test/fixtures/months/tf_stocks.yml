@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: months_tf_stocks
+#
+#  id         :bigint           not null, primary key
+#  close      :integer
+#  high       :integer
+#  low        :integer
+#  open       :integer
+#  volume     :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  month_id   :bigint
+#  ticker_id  :bigint
+#
+# Indexes
+#
+#  index_months_tf_stocks_on_month_id   (month_id)
+#  index_months_tf_stocks_on_ticker_id  (ticker_id)
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

@@ -29,6 +29,9 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'httpclient'
+gem 'activerecord-import'
+gem 'paranoia' # bin/rails generate migration AddDeletedAtToTicker deleted_at:datetime:index
+
 
 group :development, :test do
   # 環境のバナー

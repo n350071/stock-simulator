@@ -1,0 +1,15 @@
+# == Schema Information
+#
+# Table name: months
+#
+#  id         :bigint           not null, primary key
+#  month_at   :date
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  month_at: 2020-05-04
+
+two:
+  month_at: 2020-05-04

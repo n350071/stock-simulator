@@ -1,8 +1,9 @@
-class CreateTickerWeekHistories < ActiveRecord::Migration[6.0]
+class CreateMonthsTfStocks < ActiveRecord::Migration[6.0]
   def change
-    create_table :ticker_week_histories do |t|
+    create_table :months_tf_stocks do |t|
       t.belongs_to :ticker
-      t.belongs_to :week
+      t.belongs_to :month
+
       t.integer :open
       t.integer :high
       t.integer :low

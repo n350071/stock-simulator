@@ -18,19 +18,48 @@ class Tickers::ImportTickersService
     puts 'Ticker Import Start'
     require 'csv'
     CSV.foreach(path, headers: true) do |row|
-      next if Ticker.find_by(symbol: row[Ticker::CSV.symbol])
+      next if Ticker.find_by(symbol: row[CSV_ATTR::SYMBOL])
+      next if (market = get_market(row[CSV_ATTR::MARKET])) == -1
 
       ticker = Ticker.create(
-        symbol: row[Ticker::CSV::SYMBOL],
-        name_ja: row[Ticker::CSV::NAME_JA],
-        market: row[Ticker::CSV::MARKET],
-        field33: row[Ticker::CSV::FIELD33],
-        field17: row[Ticker::CSV::FIELD17],
-        scale: row[Ticker::CSV::SCALE],
+        symbol: row[CSV_ATTR::SYMBOL],
+        name: row[CSV_ATTR::NAME_JA],
+        market: market,
+        field33: row[CSV_ATTR::FIELD33],
+        field17: row[CSV_ATTR::FIELD17],
+        scale: row[CSV_ATTR::SCALE],
       )
-      puts "#{ticker.name_ja}: #{ticker.symbol}" if ticker.persisted?
+
+      puts "#{ticker.name}: #{ticker.symbol} in #{ticker.market}" if ticker.persisted?
     end
     puts 'Ticker Import End'
   end
+
+  def get_market(market)
+    case market
+    when Regexp.new(Ticker::Market::TokyoFirst)
+      Ticker.markets["TokyoFirst"]
+    when Regexp.new(Ticker::Market::TokyoSecond)
+      Ticker.markets["TokyoSecond"]
+    when Regexp.new(Ticker::Market::Mother)
+      Ticker.markets["Mother"]
+    when Regexp.new(Ticker::Market::JASDAQ)
+      Ticker.markets["JASDAQ"]
+    when Regexp.new(Ticker::Market::ETFN)
+      Ticker.markets["ETFN"]
+    else
+      -1
+    end
+  end
+
+  module CSV_ATTR
+    SYMBOL = 'コード'
+    NAME_JA = '銘柄名'
+    MARKET = '市場・商品区分'
+    FIELD33 = '33業種コード'
+    FIELD17 ='17業種コード'
+    SCALE = '規模コード'
+  end
+
 end
 
