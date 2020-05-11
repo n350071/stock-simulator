@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<h1>MonthSimulations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>strategy</th>
+      <th>平均</th>
+      <th>６シグマ</th>
+      <th>中央</th>
+      <th>予算</th>
+      <th>累積投入予算</th>
+      <th>開始月</th>
+      <th>終了月</th>
+
+
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @month_simulations.each do |month_simulation| %>
+      <tr>
+        <td><%= month_simulation.id %></td>
+        <td><%= month_simulation.strategy %></td>
+
+        <td><%= month_simulation.asset_ave %></td>
+        <td>
+        <% unless month_simulation.asset_ave.nil? %>
+          <% month_simulation.asset_6sigma.map{|s| s.to_s(:delimited)}.each do |sigma| %>
+            <%= sigma %> 円 <br>
+          <% end %>
+        <% end %>
+        </td>
+        <td><%= month_simulation.asset_mean %></td>
+        <td><%= month_simulation.badget %></td>
+        <td><%= month_simulation.total_badget %></td>
+        <td><%= month_simulation.start_month.at %></td>
+        <td><%= month_simulation.end_month.at %></td>
+
+        <td><%= link_to 'Show', month_simulation %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

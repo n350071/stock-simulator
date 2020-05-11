@@ -7,11 +7,13 @@
 #  valuation  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  month_id   :bigint
 #  report_id  :bigint
 #  ticker_id  :bigint
 #
 # Indexes
 #
+#  index_report_tickers_on_month_id   (month_id)
 #  index_report_tickers_on_report_id  (report_id)
 #  index_report_tickers_on_ticker_id  (ticker_id)
 #

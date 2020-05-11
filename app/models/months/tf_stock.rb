@@ -24,16 +24,8 @@ class Months::TfStock < ApplicationRecord
   belongs_to :month
   belongs_to :ticker
 
-  # UNIT = 100
-
   scope :by_open_under, -> (cash) {
     where("open <= ?", cash)
   }
-
-  # [:close, :high, :low, :open].each {|name|
-  #   define_method("unit_#{name}"){
-  #     send(name) * UNIT
-  #   }
-  # }
 
 end

@@ -23,8 +23,6 @@ class Report < ApplicationRecord
   has_many :report_tickers, dependent: :destroy
   has_many :performances, dependent: :destroy
 
-  # badget <= 初期予算 + 追加積立
-
   UNIT = 100
 
   def run(strategy)

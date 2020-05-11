@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_09_224750) do
+ActiveRecord::Schema.define(version: 2020_05_11_092154) do
 
   create_table "month_simulations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "start_month_id"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(version: 2020_05_09_224750) do
     t.string "strategy"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "total_badget", comment: "累積投入予算"
+    t.integer "asset_ave", comment: "総資産の平均値"
+    t.integer "asset_sigma", comment: "総資産の標準偏差"
+    t.integer "asset_mean", comment: "総資産の中央値"
     t.index ["end_month_id"], name: "index_month_simulations_on_end_month_id"
     t.index ["start_month_id"], name: "index_month_simulations_on_start_month_id"
   end
@@ -67,6 +71,8 @@ ActiveRecord::Schema.define(version: 2020_05_09_224750) do
     t.integer "valuation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "month_id"
+    t.index ["month_id"], name: "index_report_tickers_on_month_id"
     t.index ["report_id"], name: "index_report_tickers_on_report_id"
     t.index ["ticker_id"], name: "index_report_tickers_on_ticker_id"
   end

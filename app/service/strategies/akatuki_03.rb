@@ -1,7 +1,7 @@
-class Strategies::Akatuki
+class Strategies::Akatuki03
   attr_accessor :report
 
-  PER = 1.05
+  PER = 1.07
 
   def initialize(report: nil)
     return if report.nil?
