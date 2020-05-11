@@ -20,7 +20,16 @@
 #
 class Ticker < ApplicationRecord
   acts_as_paranoid
+
+  has_many :report_tickers
+  has_many :reports, through: :report_tickers
+
   has_many :tfstocks, class_name: 'Months::TfStock'
+  # has_many :tsstocks, class_name: 'Months::TsStock'
+  # has_many :mothers, class_name: 'Months::Mother'
+  # has_many :jasdaqs,
+  # has_many :etfn
+
   validates :symbol, uniqueness: true
 
   # Ticker.market_TokyoFirst => []

@@ -114,10 +114,8 @@ class Tickers::ImportMonthlyHistoryService
       symbol: symbol
     }
   end
-#https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=1321.TOK&apikey=T0WZY9EXEE0YAZT1
-#https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=IBM&apikey=demo
-#https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=1321&apikey=T0WZY9EXEE0YAZT1
-#https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=1929.TOK&apikey=T0WZY9EXEE0YAZT1
+#https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=8230&apikey=T0WZY9EXEE0YAZT1
+#https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=8230.TOK&apikey=T0WZY9EXEE0YAZT1
 #https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=3194.TOK&apikey=VGYCJY3803TGGXTY
 
   def function

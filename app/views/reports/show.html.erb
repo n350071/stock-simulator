@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>month</th>
+      <th>総資産</th>
+
+      <th>買付余力</th>
+      <th>評価額</th>
+      <th>保有銘柄の購入価格総額</th>
+      <th>購入額</th>
+      <th>売却額</th>
+      <th>銘柄数</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @report.performances.each do |perf| %>
+      <tr>
+        <td><%=  perf.id %></td>
+        <td><%=  perf.month.at %></td>
+        <td><%=  perf.total_asset.to_s(:delimited) %>円</td>
+
+        <td><%=  perf.cash.to_s(:delimited) %>円</td>
+        <td><%=  perf.sum_valuation.to_s(:delimited) %>円</td>
+        <td><%=  (100 * perf.sum_price).to_s(:delimited) %>円</td>
+        <td><%=  (100 * perf.buy).to_s(:delimited) %>円</td>
+        <td><%=  (100 * perf.sell).to_s(:delimited) %>円</td>
+        <td> - </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<canvas id="myChart" width="400" height="400"></canvas>

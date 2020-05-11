@@ -1,14 +1,13 @@
 help:
 	cat Makefile
 
-# Start & Stop docker
 up:
-	docker-compose up
+	docker-compose run --service-ports web
 
 up-d:
 	docker-compose up -d
 
-stop:
+ stop:
 	docker-compose stop
 
 ## Remove stopped containers

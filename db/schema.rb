@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_124612) do
+ActiveRecord::Schema.define(version: 2020_05_09_224750) do
+
+  create_table "month_simulations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "start_month_id"
+    t.bigint "end_month_id"
+    t.bigint "badget"
+    t.string "strategy"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["end_month_id"], name: "index_month_simulations_on_end_month_id"
+    t.index ["start_month_id"], name: "index_month_simulations_on_start_month_id"
+  end
 
   create_table "months", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "month_at"
@@ -32,6 +43,46 @@ ActiveRecord::Schema.define(version: 2020_05_04_124612) do
     t.index ["ticker_id"], name: "index_months_tf_stocks_on_ticker_id"
   end
 
+  create_table "performances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "report_id"
+    t.bigint "month_id"
+    t.bigint "total_asset"
+    t.bigint "cash"
+    t.integer "sum_valuation", comment: "保有銘柄の評価額"
+    t.integer "sum_price", comment: "保有銘柄の買付額"
+    t.integer "buy", comment: "今月の購入額"
+    t.integer "sell", comment: "今月の売却額"
+    t.integer "total_buy", comment: "累積の購入額"
+    t.integer "total_sell", comment: "累積の売却額"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["month_id"], name: "index_performances_on_month_id"
+    t.index ["report_id"], name: "index_performances_on_report_id"
+  end
+
+  create_table "report_tickers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "report_id"
+    t.bigint "ticker_id"
+    t.bigint "price"
+    t.integer "valuation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["report_id"], name: "index_report_tickers_on_report_id"
+    t.index ["ticker_id"], name: "index_report_tickers_on_ticker_id"
+  end
+
+  create_table "reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "month_simulation_id"
+    t.bigint "month_id"
+    t.integer "term"
+    t.bigint "total_asset"
+    t.bigint "cash"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["month_id"], name: "index_reports_on_month_id"
+    t.index ["month_simulation_id"], name: "index_reports_on_month_simulation_id"
+  end
+
   create_table "tickers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "symbol"
@@ -46,4 +97,6 @@ ActiveRecord::Schema.define(version: 2020_05_04_124612) do
     t.index ["deleted_at"], name: "index_tickers_on_deleted_at"
   end
 
+  add_foreign_key "month_simulations", "months", column: "end_month_id"
+  add_foreign_key "month_simulations", "months", column: "start_month_id"
 end
