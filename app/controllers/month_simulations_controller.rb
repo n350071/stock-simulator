@@ -11,7 +11,7 @@ class MonthSimulationsController < ApplicationController
   # GET /ticker_week_histories/1
   # GET /ticker_week_histories/1.json
   def show
-    @reports = @month_simulation.reports
+    # @reports = @month_simulation.reports
   end
 
   private
