@@ -10,6 +10,7 @@
       <th>sid</th>
       <th>id</th>
       <th>strategy</th>
+      <th>strategy_params</th>
       <th>total_asset</th>
       <th colspan="3"></th>
     </tr>
@@ -21,6 +22,7 @@
         <td><%= report.month_simulation.id %></td>
         <td><%= report.id %></td>
         <td><%= report.month_simulation.strategy %></td>
+        <td><%= report.month_simulation.strategy_params %></td>
         <td><%= report.total_asset.to_i.to_s(:delimited) %>円</td>
         <td><%= link_to 'Show', report %></td>
       </tr>

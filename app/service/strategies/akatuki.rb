@@ -1,11 +1,12 @@
 class Strategies::Akatuki
-  attr_accessor :report
+  attr_accessor :report, :up_per
 
-  PER = 1.05
-
-  def initialize(report: nil)
+  def initialize(report: nil, strategy_params: nil)
     return if report.nil?
+    @up_per = 1.05 if strategy_params.nil?
+
     @report = report
+    set_params(strategy_params)
   end
 
   def run
@@ -32,11 +33,16 @@ class Strategies::Akatuki
     report.report_tickers.each{ |rt|
       target_mticker = Months::TfStock.find_by(ticker: rt.ticker, month: report.month)
       next if target_mticker.nil?
-      if rt.price * PER < target_mticker.high
-        report.sell(target_mticker, rt.price * PER)
+      if rt.price * up_per < target_mticker.high
+        report.sell(target_mticker, rt.price * up_per)
         puts "sell target_ticker: #{target_mticker.ticker.id}, price: #{target_mticker.open}, cash: #{report.cash}, tickers: #{report.report_tickers.map(&:ticker).map(&:id)}"
       end
     }
+  end
+
+  def set_params(strategy_params)
+    params = eval(strategy_params)
+    @up_per = params[:up_per]
   end
 
 end

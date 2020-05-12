@@ -25,9 +25,9 @@ class Report < ApplicationRecord
 
   UNIT = 100
 
-  def run(strategy)
+  def run(strategy, strategy_params)
     @buy = @sell = 0
-    "Strategies::#{strategy}".constantize.new(report: self).run
+    "Strategies::#{strategy}".constantize.new(report: self, strategy_params: strategy_params).run
   end
 
   def buy(mticker, price)

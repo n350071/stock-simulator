@@ -8,6 +8,7 @@
 #  asset_sigma(総資産の標準偏差) :integer
 #  badget                        :bigint
 #  strategy                      :string(255)
+#  strategy_params               :string(255)
 #  total_badget(累積投入予算)    :bigint
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
@@ -46,7 +47,7 @@ class MonthSimulation < ApplicationRecord
       puts "#{month.at_to_s}, cash: #{report.cash}"
 
       report.update(month: month)
-      report.run(strategy)
+      report.run(strategy, strategy_params)
       report.show
 
       puts ""
