@@ -34,4 +34,8 @@ class Month < ApplicationRecord
   def at_to_s
     month_at.to_s
   end
+
+  def at_ym
+    month_at.strftime('%y-%m')
+  end
 end

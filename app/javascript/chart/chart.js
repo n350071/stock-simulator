@@ -1,32 +1,69 @@
 import Chart from "chart.js";
+const $ = require("jquery")
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("turbolinks:load", function(){
+    var pathname = window.location.pathname;
+    if(/reports/.test(pathname) ){
+        getData(pathname)
+    }
+});
+
+function getData(pathname) {
+    $.get(pathname + ".json", function(data, status){
+        drawChart(data['performances'])
+    });
+}
+
+function drawChart(performances) {
+    let months = new Array()
+    let total_assets = new Array()
+    let cashes = new Array()
+    let buys = new Array()
+    let sells = new Array()
+    performances.forEach(performance => {
+        months.push(performance['month'])
+        total_assets.push(performance['total_asset'])
+        cashes.push(performance['cash'])
+        buys.push(performance['buy'])
+        sells.push(performance['sell'])
+    } )
+
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: months,
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                label: '総資産',
+                data: total_assets,
+                backgroundColor:'rgba(255, 255, 255, 0)',
+                borderColor: 'rgba(255, 190, 11, 1)',
+                lineTension: 0,
                 borderWidth: 1
-            }]
+            },{
+                label: '売却額',
+                data: sells,
+                backgroundColor:'rgba(255, 2255, 255, 0)',
+                borderColor: 'rgba(58, 134, 255, 1)',
+                lineTension: 0,
+                borderWidth: 1
+            },{
+                label: '購入額',
+                data: buys,
+                backgroundColor:'rgba(255, 2255, 255, 0)',
+                borderColor: 'rgba(131, 56, 236, 1)',
+                lineTension: 0,
+                borderWidth: 1
+            }
+            // ,{
+            //     label: '買付余力',
+            //     data: cashes,
+            //     backgroundColor:'rgba(255, 2255, 255, 0)',
+            //     borderColor: 'rgba(251, 86, 7, 1)',
+            //     lineTension: 0,
+            //     borderWidth: 1
+            // }
+        ]
         },
         options: {
             scales: {
@@ -38,5 +75,4 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
     });
-
-});
+}
