@@ -28,4 +28,21 @@ class Months::TfStock < ApplicationRecord
     where("open <= ?", cash)
   }
 
+  # ある月からnヶ月で、高値更新したものを探す
+  scope :high_price_update_in, -> (this_month, n) {
+    where(month: this_month).select{ |ti|
+      ti.high >= ti.last_high(n)
+    }
+
+  }
+
+  scope :between, -> (month, n) {
+    joins(:month).merge(Month.between_at(month.at.ago(n.month), month.at))
+  }
+
+  # 過去nヶ月間での高値
+  def last_high(n)
+    Months::TfStock.between(month, n).where(ticker: ticker).map(&:high).max
+  end
+
 end
