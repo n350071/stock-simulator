@@ -31,6 +31,7 @@ function drawChart(performances) {
     } )
 
     var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx_ticker_counts = document.getElementById('tickerCounts').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -57,7 +58,23 @@ function drawChart(performances) {
                 lineTension: 0,
                 borderWidth: 1
             }
-            ,{
+        ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    new Chart(ctx_ticker_counts, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
                 label: '銘柄数',
                 data: ticker_counts,
                 backgroundColor:'rgba(255, 2255, 255, 0)',
@@ -77,4 +94,7 @@ function drawChart(performances) {
             }
         }
     });
+
+
+
 }
