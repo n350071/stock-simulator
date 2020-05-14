@@ -25,4 +25,7 @@ class Performance < ApplicationRecord
   belongs_to :report
   belongs_to :month
 
+  # 保有銘柄数
+  # 保有月数
+
 end

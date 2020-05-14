@@ -18,14 +18,23 @@ class Month < ApplicationRecord
     where(month_at: Time.zone.local(y, m)..Time.zone.local(y, m).end_of_month)
   }
 
-
+  # Month型
   scope :between, -> (start_month, end_month) {
     where(month_at: start_month.at..end_month.at).order(:month_at)
   }
 
-  scope :last_month,->(this_month) {
+  # Date型
+  scope :between_at, -> (start_month_at, end_month_at) {
+    where(month_at: start_month_at..end_month_at).order(:month_at)
+  }
+
+  scope :last_month,-> (this_month) {
     find_by(month_at: this_month.at.last_month.beginning_of_month..this_month.at.last_month.end_of_month)
   }
+
+  def last
+    Month.last_month(self)
+  end
 
   def at
     month_at

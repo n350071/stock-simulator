@@ -30,7 +30,7 @@ class MonthSimulation < ApplicationRecord
   belongs_to :end_month, class_name: 'Month'
   has_many :reports, dependent: :destroy
 
-  TRIALS = 10
+  TRIALS = 1
 
   def run
     TRIALS.times{
@@ -44,13 +44,11 @@ class MonthSimulation < ApplicationRecord
     report = reports.build(cash: badget)
 
     Month.between(start_month, end_month).each{ |month|
-      puts "#{month.at_to_s}, cash: #{report.cash}"
+      puts "#{month.at_to_s}"
 
       report.update(month: month)
       report.run(strategy, strategy_params)
       report.show
-
-      puts ""
     }
   end
 

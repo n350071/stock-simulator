@@ -20,11 +20,16 @@
 class ReportTicker < ApplicationRecord
   belongs_to :report
   belongs_to :ticker
-# 購入月も知りたい
+  belongs_to :month # 購入月
 
-  def tfstocks(month)
-    Months::TfStock.find_by(ticker: ticker, month: month)
-  end
+  scope :by_ticker, -> (ticker) {
+    where(ticker: ticker)
+  }
+
+  # ある月からnヶ月以上保持しているものを探す
+  scope :by_keep_over, -> (this_month, n) {
+    joins(:month).merge(Month.between_at(this_month.at.ago(n.month), this_month.at))
+  }
 
   def settle(month)
     tfstock = tfstocks(month)
@@ -34,4 +39,10 @@ class ReportTicker < ApplicationRecord
   def rate
     valuation / price.to_f
   end
+
+  # ある月のtfstockを見つける
+  def tfstocks(that_month)
+    Months::TfStock.find_by(ticker: ticker, month: that_month)
+  end
+
 end

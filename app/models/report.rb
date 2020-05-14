@@ -33,7 +33,7 @@ class Report < ApplicationRecord
   def buy(mticker, price)
     self.cash -= price * UNIT
     @buy += price
-    report_tickers.build(ticker: mticker.ticker, price: price)
+    report_tickers.build(ticker: mticker.ticker, price: price, month: month)
   end
 
   def sell(mticker, price)
@@ -54,9 +54,11 @@ class Report < ApplicationRecord
       sum_valuation: report_tickers.map(&:valuation).sum,
       sum_price: report_tickers.map(&:price).sum,
       buy: @buy,
-      sell: @sell
+      sell: @sell,
+      ticker_count: report_tickers.count
     )
 
+    save
   end
 
   def valuation
@@ -72,15 +74,6 @@ class Report < ApplicationRecord
     cash / UNIT
   end
 
-  # def copy_from_last_month(:month, :month_simulation)
-  #   report = last_report(month: month, month_simulation: month_simulation)
-  #   term = report.term + 1
-  # end
-
-  # def last_report(month)
-  #   report.find_by(month: Month.last_month(month), month_simulation: self)
-  # end
-
   def show
     puts "総資産: #{total_asset}, Cash: #{cash}, 評価額: #{valuation}, 買付価格: #{buying_price}"
     puts "内訳 [社名]: 評価額, 買付価格"
@@ -88,12 +81,5 @@ class Report < ApplicationRecord
       puts "#{rt.ticker.name}: #{rt.valuation}, #{rt.price} (#{rt.rate})"
     }
   end
-
-  # private
-  # def close_unit_price
-  #   report_tickers.map{ |rt|
-  #     Months::TfStock.find_by(ticker: rt.ticker, month: month).close
-  #   }.sum * UNIT
-  # end
 
 end

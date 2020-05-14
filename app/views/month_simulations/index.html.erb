@@ -26,7 +26,14 @@
       <tr>
         <td><%= month_simulation.id %></td>
         <td><%= month_simulation.strategy %></td>
-        <td><%= month_simulation.strategy_params %></td>
+
+        <td>
+        <% unless month_simulation.strategy_params.nil? %>
+          <% eval(month_simulation.strategy_params).each do |key, value| %>
+            <%= key %>: <%= value%><br>
+          <% end %>
+        <% end %>
+        </td>
 
         <td><%= month_simulation.asset_ave %></td>
         <td>

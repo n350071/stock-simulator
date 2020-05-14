@@ -22,7 +22,13 @@
         <td><%= report.month_simulation.id %></td>
         <td><%= report.id %></td>
         <td><%= report.month_simulation.strategy %></td>
-        <td><%= report.month_simulation.strategy_params %></td>
+        <td>
+          <% unless report.month_simulation.strategy_params.nil? %>
+            <% eval(report.month_simulation.strategy_params).each do |key, value| %>
+              <%= key %>: <%= value%><br>
+            <% end %>
+          <% end %>
+        </td>
         <td><%= report.total_asset.to_i.to_s(:delimited) %>円</td>
         <td><%= link_to 'Show', report %></td>
       </tr>

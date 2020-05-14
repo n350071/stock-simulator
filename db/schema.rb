@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_12_214800) do
+ActiveRecord::Schema.define(version: 2020_05_13_234402) do
 
   create_table "month_simulations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "start_month_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_05_12_214800) do
     t.integer "total_sell", comment: "累積の売却額"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "ticker_count", comment: "保有銘柄数"
     t.index ["month_id"], name: "index_performances_on_month_id"
     t.index ["report_id"], name: "index_performances_on_report_id"
   end

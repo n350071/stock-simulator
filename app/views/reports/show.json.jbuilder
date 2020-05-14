@@ -6,6 +6,7 @@ json.set! :performances do
     json.cash(perf.cash)
     json.buy(100 * perf.buy)
     json.sell(100 * perf.sell)
+    json.ticker_count(perf.ticker_count || 0)
   end
 end
 # json.extract! ticker_week_history, :id, :open, :high, :low, :close, :volue, :week_at, :created_at, :updated_at

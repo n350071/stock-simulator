@@ -20,12 +20,14 @@ function drawChart(performances) {
     let cashes = new Array()
     let buys = new Array()
     let sells = new Array()
+    let ticker_counts = new Array()
     performances.forEach(performance => {
         months.push(performance['month'])
         total_assets.push(performance['total_asset'])
         cashes.push(performance['cash'])
         buys.push(performance['buy'])
         sells.push(performance['sell'])
+        ticker_counts.push(performance['ticker_count'])
     } )
 
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -55,14 +57,14 @@ function drawChart(performances) {
                 lineTension: 0,
                 borderWidth: 1
             }
-            // ,{
-            //     label: '買付余力',
-            //     data: cashes,
-            //     backgroundColor:'rgba(255, 2255, 255, 0)',
-            //     borderColor: 'rgba(251, 86, 7, 1)',
-            //     lineTension: 0,
-            //     borderWidth: 1
-            // }
+            ,{
+                label: '銘柄数',
+                data: ticker_counts,
+                backgroundColor:'rgba(255, 2255, 255, 0)',
+                borderColor: 'rgba(251, 86, 7, 1)',
+                lineTension: 0,
+                borderWidth: 1
+            }
         ]
         },
         options: {
