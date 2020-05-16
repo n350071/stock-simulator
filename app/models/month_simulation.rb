@@ -30,7 +30,7 @@ class MonthSimulation < ApplicationRecord
   belongs_to :end_month, class_name: 'Month'
   has_many :reports, dependent: :destroy
 
-  TRIALS = 3
+  TRIALS = 2
 
   def run
     TRIALS.times{

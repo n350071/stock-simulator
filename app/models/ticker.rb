@@ -28,7 +28,7 @@ class Ticker < ApplicationRecord
   # has_many :tsstocks, class_name: 'Months::TsStock'
   # has_many :mothers, class_name: 'Months::Mother'
   # has_many :jasdaqs,
-  # has_many :etfn
+  has_many :etfn, class_nama: 'Months::Etfn'
 
   validates :symbol, uniqueness: true
 

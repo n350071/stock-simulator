@@ -45,16 +45,8 @@ class Months::TfStock < ApplicationRecord
               }
 
     where(ticker_id: targets.map(&:ticker_id)).where(month: this_month)
-
-    # last_highs = where(month: between_months.map(&:id)).where(id: targets.map(&:id)).group(:ticker_id).max(:high)
   }
 
-  # => 30.963499267
-  # scope :high_price_update_in_old, -> (this_month, n) {
-  #   where(month: this_month.last).select{ |last_tf|
-  #     last_tf.high >= last_tf.last_high(n)
-  #   }
-  # }
 
   scope :between, -> (month, n) {
     joins(:month).merge(Month.between_at(month.at.ago(n.month), month.at))

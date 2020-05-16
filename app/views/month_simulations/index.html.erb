@@ -50,6 +50,7 @@
         <td><%= month_simulation.end_month.at %></td>
 
         <td><%= link_to 'Show', month_simulation %></td>
+        <td><%= link_to 'Destroy', month_simulation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

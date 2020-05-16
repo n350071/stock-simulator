@@ -45,4 +45,8 @@ class ReportTicker < ApplicationRecord
     Months::TfStock.find_by(ticker: ticker, month: that_month)
   end
 
+  def keep_month(this_month)
+    (this_month.at - month.at).round(-1)/30
+  end
+
 end
