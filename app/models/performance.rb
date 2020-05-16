@@ -15,6 +15,7 @@
 #  updated_at                      :datetime         not null
 #  month_id                        :bigint
 #  report_id                       :bigint
+#  ticker_count(保有銘柄数)         :integer
 #
 # Indexes
 #
@@ -25,7 +26,6 @@ class Performance < ApplicationRecord
   belongs_to :report
   belongs_to :month
 
-  # 保有銘柄数
   # 保有月数
 
 end

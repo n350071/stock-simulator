@@ -28,13 +28,33 @@ class Months::TfStock < ApplicationRecord
     where("open <= ?", cash)
   }
 
-  # ある月からnヶ月で、高値更新したものを探す
+  # ある月の前月からnヶ月で、高値更新したものを探す
+  # instant_performance{ Months::TfStock.high_price_update_in(this_month, 12) }
+  # => 0.283571904
+  # new = Months::TfStock.high_price_update_in(this_month, 12)
   scope :high_price_update_in, -> (this_month, n) {
-    where(month: this_month).select{ |ti|
-      ti.high >= ti.last_high(n)
+    between_months = Month.between_at(this_month.last.at.ago(n.month), this_month.last.at)
+
+    last_highs = {}
+    where(month: between_months.map(&:id)).group(:ticker_id).select('max(high) as high, ticker_id').each{ |lh|
+      last_highs[lh.ticker_id]=lh.high
     }
 
+    targets = where(month: this_month.last).select{ |last_tf|
+                last_tf.high >= last_highs[last_tf.ticker_id]
+              }
+
+    where(ticker_id: targets.map(&:ticker_id)).where(month: this_month)
+
+    # last_highs = where(month: between_months.map(&:id)).where(id: targets.map(&:id)).group(:ticker_id).max(:high)
   }
+
+  # => 30.963499267
+  # scope :high_price_update_in_old, -> (this_month, n) {
+  #   where(month: this_month.last).select{ |last_tf|
+  #     last_tf.high >= last_tf.last_high(n)
+  #   }
+  # }
 
   scope :between, -> (month, n) {
     joins(:month).merge(Month.between_at(month.at.ago(n.month), month.at))
@@ -43,6 +63,10 @@ class Months::TfStock < ApplicationRecord
   # 過去nヶ月間での高値
   def last_high(n)
     Months::TfStock.between(month, n).where(ticker: ticker).map(&:high).max
+  end
+
+  def last
+    Months::TfStock.find_by(ticker: ticker, month: month.last)
   end
 
 end
