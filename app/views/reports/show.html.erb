@@ -29,9 +29,9 @@
 
         <td><%=  perf.cash.to_s(:delimited) %>円</td>
         <td><%=  perf.sum_valuation.to_s(:delimited) %>円</td>
-        <td><%=  (100 * perf.sum_price).to_s(:delimited) %>円</td>
-        <td><%=  (100 * perf.buy).to_s(:delimited) %>円</td>
-        <td><%=  (100 * perf.sell).to_s(:delimited) %>円</td>
+        <td><%=  (perf.sum_price).to_s(:delimited) %>円</td>
+        <td><%=  (perf.buy).to_s(:delimited) %>円</td>
+        <td><%=  (perf.sell).to_s(:delimited) %>円</td>
         <td><%=  perf.ticker_count || 0 %> </td>
 
       </tr>

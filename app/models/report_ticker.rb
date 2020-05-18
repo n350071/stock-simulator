@@ -3,6 +3,7 @@
 # Table name: report_tickers
 #
 #  id         :bigint           not null, primary key
+#  amount     :decimal(10, 3)
 #  price      :bigint
 #  valuation  :integer
 #  created_at :datetime         not null
@@ -20,7 +21,12 @@
 class ReportTicker < ApplicationRecord
   belongs_to :report
   belongs_to :ticker
-  belongs_to :month # 購入月
+  belongs_to :month, optional: true   # 購入月
+
+  after_initialize :set_amount, if: :new_record?
+  def set_amount
+    self.amount = 0
+  end
 
   scope :by_ticker, -> (ticker) {
     where(ticker: ticker)
@@ -34,6 +40,11 @@ class ReportTicker < ApplicationRecord
   def settle(month)
     tfstock = tfstocks(month)
     self.valuation = tfstock.nil? ? 0 : tfstock.close
+  end
+
+  def reserve_settle(month)
+    etfn = Months::Etfn.find_by(ticker: ticker, month: month)
+    update(valuation: etfn.close * amount)
   end
 
   def rate

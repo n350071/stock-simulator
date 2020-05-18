@@ -36,7 +36,7 @@ class Tickers::ImportMonthlyHistoryService
   def run
     start_time = Time.now
 
-    Ticker.market_TokyoFirst.find_each{ |ticker|
+    Ticker.market_ETFN.find_each{ |ticker|
       puts "ticker: #{ticker.symbol}, name: #{ticker.name}, market: #{ticker.market}, 経過時間: #{Time.now - start_time}"
 
       # すでに取り込み済みは next
@@ -68,32 +68,47 @@ class Tickers::ImportMonthlyHistoryService
       @rcount = 0
 
       # 最初にmonth_atを更新する（ないものがあれば、追加）
+      # monthly_keys(res_json).each{ |month_at|
+      #   Month.find_or_create_by(month_at: Time.zone.parse(month_at))
+      # }
+
+      # # 次に、Month.find_eachで追加する
+      # Month.find_in_batches(batch_size: 100){ |months|
+
+      #   histories = months.reject{|month|
+      #     res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s].nil?
+      #   }.map{ |month|
+      #     month.etfns.new(
+      #       open: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::OPEN],
+      #       high: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::HIGH],
+      #       low: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::LOW],
+      #       close: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::CLOSE],
+      #       volume: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::VOLUME],
+      #       ticker: ticker
+      #     )
+      #   }
+
+      #   Months::Etfn.import(histories)
+      # }
+
       monthly_keys(res_json).each{ |month_at|
-        Month.find_or_create_by(month_at: Time.zone.parse(month_at))
-      }
+        month = Month.by_str(month_at)
+        month = Month.create(month_at: Time.zone.parse(month_at)) if month.nil?
 
-      # 次に、Month.find_eachで追加する
-      Month.find_in_batches(batch_size: 100){ |months|
+        month.etfns.create(
+          open: res_json[ALPHA::MONTHLY_TIME_SERIES][month_at][ALPHA::OPEN],
+          high: res_json[ALPHA::MONTHLY_TIME_SERIES][month_at][ALPHA::HIGH],
+          low: res_json[ALPHA::MONTHLY_TIME_SERIES][month_at][ALPHA::LOW],
+          close: res_json[ALPHA::MONTHLY_TIME_SERIES][month_at][ALPHA::CLOSE],
+          volume: res_json[ALPHA::MONTHLY_TIME_SERIES][month_at][ALPHA::VOLUME],
+          ticker: ticker
+        )
 
-        histories = months.reject{|month|
-          res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s].nil?
-        }.map{ |month|
-          month.tfstocks.new(
-            open: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::OPEN],
-            high: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::HIGH],
-            low: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::LOW],
-            close: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::CLOSE],
-            volume: res_json[ALPHA::MONTHLY_TIME_SERIES][month.at_to_s][ALPHA::VOLUME],
-            ticker: ticker
-          )
-        }
-
-        Months::TfStock.import(histories)
       }
 
       # tickerのreflashed_at等を更新
       ticker.update( reflashed_at: res_json[ALPHA::META_DATA][ALPHA::REFRESHED] )
-      puts "ticker.tfstocks.count: #{ticker.tfstocks.count}, Months::TfStock.count: #{Months::TfStock.count}"
+      puts "ticker.etfns.count: #{ticker.etfns.count}, Months::Etfn.count: #{Months::Etfn.count}"
     }
 
   end

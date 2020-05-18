@@ -3,9 +3,10 @@ json.set! :performances do
   json.array!(@report.performances) do |perf|
     json.month(perf.month.at_ym)
     json.total_asset(perf.total_asset)
+    json.total_badget(perf.total_badget)
     json.cash(perf.cash)
-    json.buy(100 * perf.buy)
-    json.sell(100 * perf.sell)
+    json.buy(perf.buy)
+    json.sell(perf.sell)
     json.ticker_count(perf.ticker_count || 0)
   end
 end

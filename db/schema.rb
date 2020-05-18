@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_234402) do
+ActiveRecord::Schema.define(version: 2020_05_18_044814) do
+
+  create_table "etfns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "ticker_id"
+    t.bigint "month_id"
+    t.integer "open"
+    t.integer "high"
+    t.integer "low"
+    t.integer "close"
+    t.bigint "volume"
+    t.bigint "integer"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["month_id"], name: "index_etfns_on_month_id"
+    t.index ["ticker_id"], name: "index_etfns_on_ticker_id"
+  end
 
   create_table "month_simulations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "start_month_id"
@@ -19,7 +34,6 @@ ActiveRecord::Schema.define(version: 2020_05_13_234402) do
     t.string "strategy"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "total_badget", comment: "累積投入予算"
     t.integer "asset_ave", comment: "総資産の平均値"
     t.integer "asset_sigma", comment: "総資産の標準偏差"
     t.integer "asset_mean", comment: "総資産の中央値"
@@ -62,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_234402) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "ticker_count", comment: "保有銘柄数"
+    t.bigint "total_badget", comment: "累積投入予算"
     t.index ["month_id"], name: "index_performances_on_month_id"
     t.index ["report_id"], name: "index_performances_on_report_id"
   end
@@ -74,6 +89,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_234402) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "month_id"
+    t.decimal "amount", precision: 10, scale: 3
     t.index ["month_id"], name: "index_report_tickers_on_month_id"
     t.index ["report_id"], name: "index_report_tickers_on_report_id"
     t.index ["ticker_id"], name: "index_report_tickers_on_ticker_id"
@@ -87,6 +103,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_234402) do
     t.bigint "cash"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "total_badget", comment: "累積投入予算"
     t.index ["month_id"], name: "index_reports_on_month_id"
     t.index ["month_simulation_id"], name: "index_reports_on_month_simulation_id"
   end

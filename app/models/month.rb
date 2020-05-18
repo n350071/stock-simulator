@@ -9,6 +9,7 @@
 #
 class Month < ApplicationRecord
   has_many :tfstocks, class_name: 'Months::TfStock'
+  has_many :etfns, class_name: 'Months::Etfn'
 
   scope :by_year_month, -> (y, m) {
     find_by(month_at: Time.zone.local(y, m)..Time.zone.local(y, m).end_of_month)
@@ -16,6 +17,12 @@ class Month < ApplicationRecord
 
   scope :by_ym, -> (y, m) {
     where(month_at: Time.zone.local(y, m)..Time.zone.local(y, m).end_of_month)
+  }
+
+  # 'yyyy-mm-dd'
+  scope :by_str, -> (str) {
+    ymd = str.split('-').map(&:to_i)
+    by_year_month(ymd[0], ymd[1])
   }
 
   # Month型

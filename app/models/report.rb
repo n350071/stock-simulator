@@ -2,14 +2,15 @@
 #
 # Table name: reports
 #
-#  id                  :bigint           not null, primary key
-#  cash                :bigint
-#  term                :integer
-#  total_asset         :bigint
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  month_id            :bigint
-#  month_simulation_id :bigint
+#  id                         :bigint           not null, primary key
+#  cash                       :bigint
+#  term                       :integer
+#  total_asset                :bigint
+#  total_badget(累積投入予算) :bigint
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  month_id                   :bigint
+#  month_simulation_id        :bigint
 #
 # Indexes
 #
@@ -24,6 +25,11 @@ class Report < ApplicationRecord
   has_many :performances, dependent: :destroy
 
   UNIT = 100
+
+  after_initialize :set_total_badget, if: :new_record?
+  def set_total_badget
+    self.total_badget = 0
+  end
 
   def run(strategy, strategy_params)
     @buy = @sell = 0
@@ -80,6 +86,37 @@ class Report < ApplicationRecord
     report_tickers.each{ |rt|
       puts "#{rt.ticker.name}: #{rt.valuation}, #{rt.price} (#{rt.rate})"
     }
+  end
+
+  def charge(aditional_badget)
+    self.cash += aditional_badget
+    update(cash: cash + aditional_badget, total_badget: total_badget + aditional_badget)
+  end
+
+  def reserve(target_etf, price)
+    update(cash: cash - price)
+    @buy += price
+
+    rt = ReportTicker.find_or_create_by(ticker: target_etf.ticker, report: self)
+    rt.amount += price / target_etf.open.to_f
+    rt.save
+  end
+
+  def reserve_settle
+    report_tickers.each{|rt| rt.reserve_settle(month) }
+    self.total_asset = self.cash + report_tickers.map(&:valuation).sum
+    performances.create(
+      month: month,
+      cash: cash,
+      total_asset: self.total_asset,
+      total_badget: self.total_badget,
+      sum_valuation: report_tickers.map(&:valuation).sum,
+      sum_price: report_tickers.map(&:price).sum,
+      buy: @buy,
+      sell: @sell,
+      ticker_count: report_tickers.count
+    )
+    save
   end
 
 end

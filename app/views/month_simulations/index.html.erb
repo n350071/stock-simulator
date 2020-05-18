@@ -9,10 +9,10 @@
       <th>strategy</th>
       <th>strategy_params</th>
       <th>平均</th>
+      <th>シグマ</th>
       <th>６シグマ</th>
       <th>中央</th>
       <th>予算</th>
-      <th>累積投入予算</th>
       <th>開始月</th>
       <th>終了月</th>
 
@@ -36,6 +36,7 @@
         </td>
 
         <td><%= month_simulation.asset_ave %></td>
+        <td><%= month_simulation.calc_sigma %></td>
         <td>
         <% unless month_simulation.asset_ave.nil? %>
           <% month_simulation.asset_6sigma.map{|s| s.to_s(:delimited)}.each do |sigma| %>
@@ -45,7 +46,6 @@
         </td>
         <td><%= month_simulation.asset_mean %></td>
         <td><%= month_simulation.badget %></td>
-        <td><%= month_simulation.total_badget %></td>
         <td><%= month_simulation.start_month.at %></td>
         <td><%= month_simulation.end_month.at %></td>
 

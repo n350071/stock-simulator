@@ -20,14 +20,20 @@ function drawChart(performances) {
     let cashes = new Array()
     let buys = new Array()
     let sells = new Array()
+    let total_badgets = new Array()
     let ticker_counts = new Array()
+    let total_ratios = new Array()
     performances.forEach(performance => {
         months.push(performance['month'])
         total_assets.push(performance['total_asset'])
+        total_badgets.push((performance['total_badget']))
         cashes.push(performance['cash'])
         buys.push(performance['buy'])
         sells.push(performance['sell'])
         ticker_counts.push(performance['ticker_count'])
+        if(performance['total_badget']){
+            total_ratios.push(performance['total_asset']/performance['total_badget'])
+        }
     } )
 
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -44,17 +50,10 @@ function drawChart(performances) {
                 lineTension: 0,
                 borderWidth: 1
             },{
-                label: '売却額',
-                data: sells,
+                label: '累積投入予算',
+                data: total_badgets,
                 backgroundColor:'rgba(255, 2255, 255, 0)',
                 borderColor: 'rgba(58, 134, 255, 1)',
-                lineTension: 0,
-                borderWidth: 1
-            },{
-                label: '購入額',
-                data: buys,
-                backgroundColor:'rgba(255, 2255, 255, 0)',
-                borderColor: 'rgba(131, 56, 236, 1)',
                 lineTension: 0,
                 borderWidth: 1
             }
@@ -79,6 +78,13 @@ function drawChart(performances) {
                 data: ticker_counts,
                 backgroundColor:'rgba(255, 2255, 255, 0)',
                 borderColor: 'rgba(251, 86, 7, 1)',
+                lineTension: 0,
+                borderWidth: 1
+            },{
+                label: '総資産／投入予算',
+                data: total_ratios,
+                backgroundColor:'rgba(255, 2255, 255, 0)',
+                borderColor: 'rgba(131, 56, 236, 1)',
                 lineTension: 0,
                 borderWidth: 1
             }
